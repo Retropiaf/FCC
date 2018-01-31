@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130212552) do
+ActiveRecord::Schema.define(version: 20180130235442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,15 +23,15 @@ ActiveRecord::Schema.define(version: 20180130212552) do
     t.string "tests", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "chapter_id"
+    t.index ["chapter_id"], name: "index_challenges_on_chapter_id"
   end
 
   create_table "chapters", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "challenge_id"
-    t.index ["challenge_id"], name: "index_chapters_on_challenge_id"
   end
 
-  add_foreign_key "chapters", "challenges"
+  add_foreign_key "challenges", "chapters"
 end

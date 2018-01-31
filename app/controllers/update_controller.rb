@@ -5,13 +5,15 @@ class UpdateController < ApplicationController
   end
 
   def pull
-    location = params[:location]
+    location = params[:unloop_fcc_repo_location]
     system "cd #{location}"
     return system 'git pull'
   end
 
   def sync
   end
+
+
 
 
 
