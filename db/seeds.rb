@@ -12,26 +12,31 @@ challenges_path = '/Users/Christiane/Desktop/Christiane/Personnal_projects/Unloo
 def parse_challenge(json_file_path)
   challenge_data = JSON.parse(File.read(json_file_path))
 
+
     # Create and save a new chapter object
-    chapter = Chapter.new(name: challenge_data["name"])
+    chapter = Chapter.new(name: challenge_data["name"], order: challenge_data["order"].to_i)
     chapter.save
-    p chapter
+    p "-------------------------"
 
+    challenge_counter = 1
 
-
-    # Create and save a new challenge object
-    challenge = Challenge.new()
-    challenge.freeCodeCampId = challenge_data["challenges"]["id"]
-    challenge.title = challenge_data["challenges"]["title"]
-    challenge.description = challenge_data["challenges"]["description"]
-    challenge.challengeSeed = challenge_data["challenges"]["challengeSeed"]
-    challenge.tests = challenge_data["challenges"]["test"]
-    challenge.chapter_id = chapter.id
-    challenge.save
-    p challenge
+    # Look inside the "challenges" array and create and save a new challenge object
+    challenge_data["challenges"].each do |jsonChallenge|
+      challenge = Challenge.new()
+      challenge.freeCodeCampId = jsonChallenge["id"]
+      challenge.title = jsonChallenge["title"]
+      challenge.challengeSeed = jsonChallenge["challengeSeed"]
+      challenge.tests = jsonChallenge["test"]
+      challenge.description = jsonChallenge["description"]
+      challenge.order = challenge_counter
+      challenge.chapter_id = chapter.id
+      challenge.save
+      p challenge
+      challenge_counter += 1
+      p "-------------------------"
+    end
 
 end
-
 
 # Look inside each directory in challenges
 Dir.foreach(challenges_path) do |folder_name|
@@ -48,22 +53,4 @@ Dir.foreach(challenges_path) do |folder_name|
     end
 
   end
-
-
-
-
-
-
-
-=begin
-  # For each chapter directory, look at each json file
-  Dir.glob("/#{chapter_directory}/*.json") do |json_challenge|
-
-    puts "inside the directory"
-    p json_challenge
-    # For each .json file / challenge file, call parse
-    parse_challenge(json_file)
-
-  end
-=end
 end

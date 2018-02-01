@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130235442) do
+ActiveRecord::Schema.define(version: 20180201050624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,12 +18,14 @@ ActiveRecord::Schema.define(version: 20180130235442) do
   create_table "challenges", force: :cascade do |t|
     t.string "freeCodeCampId"
     t.string "title"
-    t.string "description", default: [], array: true
     t.string "challengeSeed", default: [], array: true
     t.string "tests", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "chapter_id"
+    t.integer "order"
+    t.integer "description_id"
+    t.json "description"
     t.index ["chapter_id"], name: "index_challenges_on_chapter_id"
   end
 
@@ -31,7 +33,26 @@ ActiveRecord::Schema.define(version: 20180130235442) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "order"
+  end
+
+  create_table "description_paragraphers", force: :cascade do |t|
+    t.string "paragraph", array: true
+    t.integer "order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "challenge_id"
+    t.index ["challenge_id"], name: "index_description_paragraphers_on_challenge_id"
+  end
+
+  create_table "descriptions", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_descriptions_on_challenge_id"
   end
 
   add_foreign_key "challenges", "chapters"
+  add_foreign_key "description_paragraphers", "challenges"
+  add_foreign_key "descriptions", "challenges"
 end
