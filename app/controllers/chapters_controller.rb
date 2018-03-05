@@ -4,7 +4,7 @@ class ChaptersController < ApplicationController
   # GET /chapters
   # GET /chapters.json
   def index
-    data = Chapter.all.order(:order)
+    data = Chapter.all.order(:id)
     render status: :ok, json: data
   end
 
