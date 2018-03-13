@@ -2,7 +2,7 @@
 
 This project is developed for and in collaboration with Unloop and uses [freeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp)'s open source codebase and curriculum.
 
-The project is split in two repositories. This repository is the front-end repository. You can find the back-end repository [here](https://github.com/Retropiaf/FCCFront-end).
+The project is split in two repositories. This repository is the back-end repository. You can find the front-end repository [here](https://github.com/Retropiaf/FCCFront-end).
 
 
 # Project Setup
