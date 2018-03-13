@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
     resources :challenges
     resources :chapters
-    #Update Controller
 
     get "/update/connection", to: "update#check_connection", as: "connection"
     get "/update/repo_availability", to: "update#repo_availability", as: "availability"

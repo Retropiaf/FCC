@@ -9,12 +9,4 @@ class UpdateController < ApplicationController
     system "cd #{location}"
     return system 'git pull'
   end
-
-  def sync
-  end
-
-
-
-
-
 end

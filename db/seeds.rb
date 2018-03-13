@@ -12,12 +12,9 @@ challenges_path = '/Users/Christiane/Desktop/Christiane/Personnal_projects/Unloo
 def parse_challenge(json_file_path)
   challenge_data = JSON.parse(File.read(json_file_path))
 
-
     # Create and save a new chapter object
     chapter = Chapter.new(name: challenge_data["name"], order: challenge_data["order"].to_i)
     chapter.save
-    p "-------------------------"
-
     challenge_counter = 1
 
     # Look inside the "challenges" array and create and save a new challenge object
@@ -31,9 +28,7 @@ def parse_challenge(json_file_path)
       challenge.order = challenge_counter
       challenge.chapter_id = chapter.id
       challenge.save
-      p challenge
       challenge_counter += 1
-      p "-------------------------"
     end
 
 end
@@ -45,12 +40,10 @@ Dir.foreach(challenges_path) do |folder_name|
 
   # Look  inside each folder
   Dir.foreach("#{challenges_path}/#{folder_name}") do |content|
-
     # Only call parse_challenge on json file
     if File.extname(content).strip.downcase[1..-1] == "json"
       json_challenge = content
       parse_challenge("#{challenges_path}/#{folder_name}/#{json_challenge}")
     end
-
   end
 end
